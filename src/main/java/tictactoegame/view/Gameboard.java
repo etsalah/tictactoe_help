@@ -71,8 +71,14 @@ public class Gameboard implements InnerTicTacController{
             } else if (controller.isBoardFull() && controller.isTie()) {
                 restart();
             } else {
-//                controller.computerPlayer();
-                requestInput();
+                controller.computerPlayer();
+                printBoard(controller.getBoard());
+                winnerFound = controller.checkWinner(2, controller.getPlayerCharacter(2));
+                if (winnerFound) {
+                    restart();
+                } else {
+                    requestInput();
+                }
             }
         }
 
@@ -86,6 +92,7 @@ public class Gameboard implements InnerTicTacController{
         restart = scan.next();
         if(controller.restart(restart))
         {
+            printBoard(controller.getBoard());
             requestInput();
         }
         else
@@ -145,8 +152,8 @@ public class Gameboard implements InnerTicTacController{
         }
         else
         {
-            controller.computerPlayer();
             System.out.println("****COMPUTER'S TURN****");
+            controller.computerPlayer();
         }
         printBoard(board);
     }

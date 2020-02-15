@@ -76,7 +76,11 @@ public class TicTacToeController {
         boolean onTie(String[][] board);
         
     }
-    
+
+    public String[][] getBoard() {
+        return this.model.getBoard();
+    }
+
     /**
      * This method validates user input
      * @param input
@@ -133,7 +137,7 @@ public class TicTacToeController {
      */
     public void play(int x, int y)
     {
-        String value=getPlayerCharacter(player);
+        String value = getPlayerCharacter(player);
         model.setBoard(x, y, value);
     }
     
@@ -142,6 +146,7 @@ public class TicTacToeController {
      */
     public void computerPlayer()
     {
+        player = 2;
         int comp=ram.nextInt(9)+1;
         if (!isSpotAvailable(comp)) {
             computerPlayer();
@@ -149,6 +154,7 @@ public class TicTacToeController {
             int[] coords = getCoordinates(comp);
             play(coords[0], coords[1]);
         }
+        player = 1;
     }
 
     public boolean isTie() {
@@ -194,14 +200,7 @@ public class TicTacToeController {
         {
             return this.view.onWinnerEmerged(playerId, board);
         }
-        else
-        {
-            player=player==1?2:1;
-            this.view.onNextPlayer(player, board);
-
-            player=1;
-            return false;
-        }
+        return false;
     }
 
     /**
