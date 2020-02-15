@@ -61,5 +61,6 @@ public class GameboardTest {
     public void testRestart() {
         System.out.println("Restart");
         board.restart();
+        System.out.println("N");
     }
 }

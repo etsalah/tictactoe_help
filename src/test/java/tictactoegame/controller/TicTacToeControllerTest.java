@@ -56,8 +56,8 @@ public class TicTacToeControllerTest {
     @Test
     public void testIsSpotAvailable() {
         System.out.println("isSpotAvailable");
-        int position = 0;
-        boolean expResult = false;
+        int position = 1;
+        boolean expResult = true;
         boolean result = control.isSpotAvailable(position);
         assertEquals(expResult, result);
     }
@@ -89,7 +89,7 @@ public class TicTacToeControllerTest {
     @Test
     public void testCheckWinner() {
         System.out.println("checkWinner");
-        int playerId = 1;
+        int playerId = 0;
         String playerCharacter = "Computer";
         control.checkWinner(playerId, playerCharacter);
     }
@@ -102,7 +102,7 @@ public class TicTacToeControllerTest {
         System.out.println("isBoardFull");
         int playerId = 0;
         boolean expResult = false;
-        boolean result = control.isBoardFull(playerId);
+        boolean result = control.isBoardFull();
         assertEquals(expResult, result);
     }
 

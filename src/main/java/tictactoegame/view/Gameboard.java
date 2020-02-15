@@ -53,14 +53,36 @@ public class Gameboard implements InnerTicTacController{
     public void requestInput()
     {
         System.out.println("Enter your position from 1 - 9");
-        int placement=scan.nextInt();
-        controller.validate(placement, this);
+        int placement = scan.nextInt();
+        boolean isValid = controller.validate(placement, this);
+        if (!isValid){
+            requestInput();
+        }
+        boolean isSpotAvailable = controller.isSpotAvailable(placement);
+        if(!isSpotAvailable) {
+            requestInput();
+        } else {
+            int[] coords = controller.getCoordinates(placement);
+            controller.play(coords[0], coords[1]);
+            int playerId = controller.getPlayer();
+            boolean winnerFound = controller.checkWinner(playerId, controller.getPlayerCharacter(playerId));
+            if (winnerFound) {
+                restart();
+            } else if (controller.isBoardFull() && controller.isTie()) {
+                restart();
+            } else {
+//                controller.computerPlayer();
+                requestInput();
+            }
+        }
+
     }
     
     public void restart()
     {
         System.out.println("Game Over!!! Restart? Type Y for YES or N for NO");
         String restart;
+        scan = new Scanner(System.in);
         restart = scan.next();
         if(controller.restart(restart))
         {
@@ -117,17 +139,16 @@ public class Gameboard implements InnerTicTacController{
     @Override
     public void onNextPlayer(int nextPlayer, String[][] board) {
     
-        printBoard(board);
         if(nextPlayer==1)
         {
             System.out.println("****YOUR TURN****");
-            requestInput();
         }
         else
         {
-            System.out.println("****COMPUTER'S TURN****");
             controller.computerPlayer();
+            System.out.println("****COMPUTER'S TURN****");
         }
+        printBoard(board);
     }
 
     @Override
